@@ -23,8 +23,10 @@ public class Veritabani {
         Connection conn=null;
 
         try {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/NesneOdev",
-                    "postgres", "postgres");
+            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;"
+                    + "database=NesneOdev;"
+                    + "user=;"
+                    + "password=;");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,7 +36,7 @@ public class Veritabani {
     public boolean KullaniciKontrol(String k , String s)
     {
         System.out.println("Kullanıcı kontrol ediliyor.");
-        String sql= "SELECT * FROM \"Schema1\".\"Kullanici\"";
+        String sql= "SELECT * FROM NesneOdev.dbo.Kullanici";
         String isim = "";
         String sifre = "";
 
@@ -43,13 +45,12 @@ public class Veritabani {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
-            conn.close();
-
             while(rs.next())
             {
                 isim = rs.getString("KullaniciAdi");
                 sifre = rs.getString("Sifre");
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (Exception e) {
